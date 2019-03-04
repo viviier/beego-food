@@ -31,11 +31,23 @@
           <span>{{ detailData.description || 'no description' }}</span>
           <div>
             <el-button icon="el-icon-star-off" circle></el-button>
-            <el-button type="primary" size="medium">加入购物车<i class="el-icon-goods el-icon--right"></i></el-button>
+            <el-button type="primary" size="medium" @click="addFoodToShop(detailData)">加入购物车<i class="el-icon-goods el-icon--right"></i></el-button>
           </div>
         </div>
       </div>
     </el-dialog>
+    <el-popover
+      placement="top"
+      width="800"
+      trigger="click"
+    >
+      <el-table :data="shopFood" style="width: 100%" height="700">
+        <el-table-column width="180%" property="name" label="名称"></el-table-column>
+        <el-table-column width="180" property="id" label="个数"></el-table-column>
+        <el-table-column property="description" label="简介"></el-table-column>
+      </el-table>
+      <el-button slot="reference" type="primary" icon="el-icon-goods" circle class="shop-button"></el-button>
+    </el-popover>
   </div>
 </template>
 
@@ -67,6 +79,14 @@ export default {
     },
     getScroll () {
       console.log('ok')
+    },
+    addFoodToShop (item) {
+      this.$store.dispatch('addFoodShop', item)
+    }
+  },
+  computed: {
+    shopFood () {
+      return this.$store.getters.foodItems
     }
   },
   mounted () {
@@ -162,5 +182,12 @@ export default {
       }
     }
   }
+
+  .shop-button {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+  }
 }
+
 </style>
