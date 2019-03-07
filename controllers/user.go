@@ -27,6 +27,9 @@ func (this *UserControllers) Signup() {
 	if err := json.Unmarshal(this.Ctx.Input.RequestBody, &user); err == nil {
 		this.Data["json"] = models.Signup(user)
 	}
-	this.Data["ok"] = "yes"
 	this.ServeJSON()
+}
+
+func signSuccess(controll *UserControllers) {
+	controll.SetSession("sid", "Sid")
 }

@@ -18,12 +18,47 @@ export default new Vuex.Store({
         ...state.shop,
         payload
       ]
+    },
+    uploadFoodShop (state, payload) {
+      state.shop = [
+        ...payload
+      ]
     }
   },
   actions: {
     addFoodShop ({ commit, state }, payload) {
-      commit('addFoodShop', payload)
+      let reState = state.shop
+      let hasItem = false
+      reState.map(item => {
+        if (item.id === payload.id) {
+          item.count += 1
+          hasItem = true
+        }
+        return item
+      })
+
+      if (hasItem) {
+        commit('uploadFoodShop', reState)
+      } else {
+        payload = {
+          ...payload,
+          count: 1
+        }
+        commit('addFoodShop', payload)
+      }
+    },
+    changeFoodShop ({ commit, state }, payload) {
+      let reState = state.shop
+      reState.map(item => {
+        if (item.id === payload.id) {
+          item.count = payload.count
+        }
+        return item
+      })
+      commit('uploadFoodShop', reState)
+    },
+    clearFoodShop ({ commit }) {
+      commit('uploadFoodShop', [])
     }
-    // todo 更改值,如果添加的时候id存在,那么count+1
   }
 })

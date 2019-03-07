@@ -3,7 +3,7 @@
     <h2>Beego-food</h2>
     <div class="login">
       <el-input class="" v-model="username" placeholder="Username" clearable></el-input>
-      <el-input v-model="password" placeholder="Password" @enter="login" type="password"></el-input>
+      <el-input v-model="password" placeholder="Password" @keyup.enter.native="login" type="password"></el-input>
       <router-link :to="{ name: 'signup' }">create new account</router-link>
       <el-button type="primary" @click="login">login</el-button>
     </div>

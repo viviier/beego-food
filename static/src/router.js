@@ -29,6 +29,11 @@ export default new Router({
       path: '/foodlistall',
       name: 'foodlistall',
       component: () => import('./views/foodlist')
+    },
+    {
+      path: '/shop',
+      name: 'shop',
+      component: () => import('./views/shop')
     }
   ]
 })

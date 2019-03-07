@@ -1,6 +1,6 @@
 <template>
   <div class="root" @scroll="getScroll">
-    <h2>Beego-food</h2>
+    <beego-header></beego-header>
     <el-row v-loading="loading">
       <el-col :span="4" v-for="item in foodlist" :key="item.index" :offset="0">
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
@@ -41,11 +41,7 @@
       width="800"
       trigger="click"
     >
-      <el-table :data="shopFood" style="width: 100%" height="700">
-        <el-table-column width="180%" property="name" label="名称"></el-table-column>
-        <el-table-column width="180" property="id" label="个数"></el-table-column>
-        <el-table-column property="description" label="简介"></el-table-column>
-      </el-table>
+      <shop :isPopover="true" />
       <el-button slot="reference" type="primary" icon="el-icon-goods" circle class="shop-button"></el-button>
     </el-popover>
   </div>
@@ -53,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import Shop from './shop.vue'
 
 export default {
   data () {
@@ -64,6 +61,9 @@ export default {
       currentDate: new Date()
     }
   },
+  components: {
+    'shop': Shop
+  },
   methods: {
     getFoodList () {
       axios
@@ -73,7 +73,6 @@ export default {
         })
     },
     foodDetail (item) {
-      console.log('?')
       this.detailData = item
       this.dialogTableVisible = true
     },
@@ -82,6 +81,12 @@ export default {
     },
     addFoodToShop (item) {
       this.$store.dispatch('addFoodShop', item)
+      this.$notify({
+        title: '成功',
+        message: '添加成功',
+        type: 'success',
+        duration: 800
+      })
     }
   },
   computed: {
@@ -110,11 +115,6 @@ export default {
 
 <style lang="scss" scoped>
 .root {
-  h2 {
-    font-size: 36px;
-    margin-left: 40px;
-  }
-
   .el-row {
     padding: 20px;
 

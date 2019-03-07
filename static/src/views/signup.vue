@@ -4,7 +4,7 @@
     <div class="signup">
       <el-input class="" v-model="name" placeholder="Name" clearable></el-input>
       <el-input class="" v-model="username" placeholder="Username" clearable></el-input>
-      <el-input v-model="password" placeholder="Password" @enter="signup" type="password"></el-input>
+      <el-input v-model="password" placeholder="Password" @keyup.enter.native="signup" type="password"></el-input>
       <router-link :to="{name: 'login'}">返回</router-link>
       <el-button type="primary" @click="signup">sign up</el-button>
     </div>
